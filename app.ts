@@ -7,8 +7,8 @@ const PORT = env.PORT || 7700
 
 const app = new Application();
 
-// app.use(router.routes())
-// app.use(router.allowedMethods())
+app.use(router.routes())
+app.use(router.allowedMethods())
 
 console.log(`Listening on port ${PORT}...`)
 await app.listen(`${HOST}:${PORT}`)

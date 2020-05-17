@@ -6,37 +6,39 @@ interface IShape {
 
 
 let shapes: Array<IShape> = [
-{
-  id: "1",
-  type: "rect",
-  text: "Idea 2 Visuals",
-},
-{
-  id: "2",
-  type: "circle",
-  text: "Draw",
-},
-{
-  id: "3",
-  type: "circle",
-  text: "elaborate",
-},
-{
-  id: "4",
-  type: "circle",
-  text: "experiment",
-},
+  {
+    id: "1",
+    type: "rect",
+    text: "Idea 2 Visuals",
+  },
+  {
+    id: "2",
+    type: "circle",
+    text: "Draw",
+  },
+  {
+    id: "3",
+    type: "circle",
+    text: "elaborate",
+  },
+  {
+    id: "4",
+    type: "circle",
+    text: "experiment",
+  },
 ]
 
-const getShapes = ({ response }: { response: any }) => { 
-  response.body = shapes 
-}
-
+// Helper method to find record by id
 const findById = (id: string): ( IShape | undefined ) =>{
   return shapes.filter(shape => shape.id === id )[0]
 }
 
+// Get all shapes data
+const getShapes = ({ response }: { response: any }) => { 
+  response.body = shapes 
+}
 
+// Get shape data by ID
 const getShape = ({ params, response }: { params: { id: string }; response: any }) => {
   const shape: IShape | undefined = findById(params.id)
   if (shape) {
@@ -48,6 +50,8 @@ const getShape = ({ params, response }: { params: { id: string }; response: any 
   }   
 }
 
+
+// Create a new shape
 const addShape = async ({request, response}: {request: any; response: any}) => {
   const body  = await request.body()
   const shape: IShape = body.value
@@ -58,6 +62,7 @@ const addShape = async ({request, response}: {request: any; response: any}) => {
   response.status = 200
 }
 
+// Update an existing shape data
 const updateShape =  async ({ params, request, response }: { params: { id: string }; request: any; response: any }) => {
   let shape: IShape | undefined = findById(params.id)
   if (shape) {
@@ -80,6 +85,7 @@ const updateShape =  async ({ params, request, response }: { params: { id: strin
   }
 }
 
+// Delete a shape by it's ID
 const deleteShape = ({ params, response }: { params: { id: string }; response: any }) => {
   shapes = shapes.filter(shape => shape.id !== params.id)
   response.body = { message: 'OK' }
